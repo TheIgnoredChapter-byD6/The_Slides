@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Past ❤️‍🔥</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .slider-container {
+            width: 25%;
+            height: auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(14, 13, 13, 0.5);
+        }
+
+        .slider {
+            display: flex;
+            width: 100%;
+            position: relative;
+        }
+
+        .slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: absolute;
+            transform: translateX(100%);
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .slide.active {
+            transform: translateX(0);
+            position: relative;
+        }
+
+        .slider.show-next .slide.active {
+            transform: translateX(0);
+        }
+
+        .slider.show-prev .slide.active {
+            transform: translateX(0);
+        }
+
+        .slider.show-next .slide:not(.active),
+        .slider.show-prev .slide:not(.active) {
+            transform: translateX(-100%);
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+
+        .nav-buttons button {
+            background-image: url('https://cdn-icons-png.flaticon.com/128/954/954528.png');
+            background-repeat: no-repeat;
+            background-position: 50px;
+            background-size: 30px;
+            border-color: rgb(7, 7, 7);
+            padding: 10px 40px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-radius: 90px;
+            font-size: solid 16px;
+            color: rgb(6, 6, 6);
+            transition: background 0.3s, transform 0.3s;
+            text-indent: -20px;
+            font-weight: bold;
+        }
+        .nav-buttons button:hover {
+            background-image: url('https://cdn-icons-png.flaticon.com/128/508/508735.png');
+            background-position: absoulte;
+            transform: scale(1.1);
+        }
+        .nav-buttons button:focus {
+            outline: none;
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            z-index: -1; /* Ensures the video stays in the background */
+        }
+        #background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide active"><img src="actually good bye.jpg" alt="Slide 1"></div>
+            <div class="slide"><img src="block button.jpg" alt="Slide 2"></div>
+            <div class="slide"><img src="curious to know.jpg" alt="Slide 3"></div>
+            <div class="slide"><img src="good bye 2.jpg" alt="Slide 4"></div>
+            <div class="slide"><img src="goodbye frnd.jpg" alt="Slide 5"></div>
+            <div class="slide"><img src="have a great future.jpg" alt="Slide 6"></div>
+            <div class="slide"><img src="humanity.jpg" alt="Slide 7"></div>
+            <div class="slide"><img src="ibbandhi.jpg" alt="Slide 8"></div>
+            <div class="slide"><img src="kotha concept.jpg" alt="Slide 9"></div>
+            <div class="slide"><img src="life korika.jpg" alt="Slide 10"></div>
+            <div class="slide"><img src="nen kuda please.jpg" alt="Slide 11"></div>
+            <div class="slide"><img src="thank you for your concern.jpg" alt="Slide 12"></div>
+        </div>
+        <div class="nav-buttons">
+            <button class="prev">Prev</button>
+            <button class="next">Next</button>
+        </div>
+    </div>
+    <div class="video-background">
+        <video autoplay muted loop id="background-video">
+            <source src="love video bg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slider = document.querySelector('.slider');
+        const nextButton = document.querySelector('.next');
+        const prevButton = document.querySelector('.prev');
+
+        let currentIndex = 0;
+        let isAnimating = false;
+
+        function showSlide(index, direction) {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                slide.style.transform = `translateX(${direction === 'next' ? '100%' : '-100%'})`;
+            });
+
+            slider.classList.remove('show-next', 'show-prev');
+
+            setTimeout(() => {
+                if (direction === 'next') {
+                    slider.classList.add('show-next');
+                } else {
+                    slider.classList.add('show-prev');
+                }
+
+                slides[index].classList.add('active');
+                slides[index].style.transform = 'translateX(0)';
+                isAnimating = false;
+            }, 50);
+        }
+
+        function showNextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex, 'next');
+        }
+
+        function showPrevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex, 'prev');
+        }
+
+        nextButton.addEventListener('click', showNextSlide);
+        prevButton.addEventListener('click', showPrevSlide);
+    </script>
+
+</body>
+</html>
+
